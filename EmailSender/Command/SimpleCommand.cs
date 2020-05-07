@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EmailSender.Command
 {
-        public class RelayCommand : ICommand
+        public class SimpleCommand : ICommand
         {
             private Action<object> execute;
             private Func<object, bool> canExecute;
@@ -18,7 +18,7 @@ namespace EmailSender.Command
                 remove { CommandManager.RequerySuggested -= value; }
             }
 
-            public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
+            public SimpleCommand(Action<object> execute, Func<object, bool> canExecute = null)
             {
                 this.execute = execute;
                 this.canExecute = canExecute;
