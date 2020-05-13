@@ -10,28 +10,29 @@ using System.Collections.Specialized;
 
 namespace EmailSender.Command
 {
-    public class AsyncRelayCommand : ICommand
+    public class AsyncCommand : ICommand
     {
-        public Func<object, Task> ExecuteFunction { get; }
-        public Predicate<object> CanExecutePredicate { get; }
+        private readonly Func<object, Task> execute;
+        private readonly Predicate<object> canExecute;
+
         public event EventHandler CanExecuteChanged;
         public void UpdateCanExecute() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         public bool IsWorking { get; private set; }
 
-        public AsyncRelayCommand(Func<object, Task> executeFunction) : this(executeFunction, (obj) => true) { }
-        public AsyncRelayCommand(Func<object, Task> executeFunction, Predicate<object> canExecutePredicate)
+        public AsyncCommand(Func<object, Task> execute) : this(execute, (obj) => true) { }
+        public AsyncCommand(Func<object, Task> execute, Predicate<object> canExecute)
         {
-            ExecuteFunction = executeFunction;
-            CanExecutePredicate = canExecutePredicate;
+            this.execute = execute;
+            this.canExecute = canExecute;
         }
 
-        public bool CanExecute(object parameter) => !IsWorking && (CanExecutePredicate?.Invoke(parameter) ?? true);
+        public bool CanExecute(object parameter) => !IsWorking && (canExecute?.Invoke(parameter) ?? true);
         public async void Execute(object parameter)
         {
             IsWorking = true;
             UpdateCanExecute();
 
-            await ExecuteFunction(parameter);
+            await execute(parameter);
 
             IsWorking = false;
             UpdateCanExecute();

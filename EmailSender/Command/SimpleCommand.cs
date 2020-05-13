@@ -9,8 +9,8 @@ namespace EmailSender.Command
 {
         public class SimpleCommand : ICommand
         {
-            private Action<object> execute;
-            private Func<object, bool> canExecute;
+            private readonly Action<object> execute;
+            private readonly Predicate<object> canExecute;
 
             public event EventHandler CanExecuteChanged
             {
@@ -18,7 +18,7 @@ namespace EmailSender.Command
                 remove { CommandManager.RequerySuggested -= value; }
             }
 
-            public SimpleCommand(Action<object> execute, Func<object, bool> canExecute = null)
+            public SimpleCommand(Action<object> execute, Predicate<object> canExecute = null)
             {
                 this.execute = execute;
                 this.canExecute = canExecute;

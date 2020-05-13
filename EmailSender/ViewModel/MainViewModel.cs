@@ -11,6 +11,8 @@ namespace EmailSender.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public MainViewModel()
+        { }
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));

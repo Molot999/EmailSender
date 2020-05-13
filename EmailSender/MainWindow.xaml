@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmailSender"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
-        
+        <TabControl HorizontalAlignment="Left" Height="424" VerticalAlignment="Top" Width="794" Margin="0,0,0,-3">
+            <TabItem Header="Отправка" Margin="-2,20,-99,-39" HorizontalAlignment="Left" Width="197" Background="#FF927BDA" BorderBrush="{x:Null}">
+                <Grid Margin="194,-2,0,0" Background="#FFDBD7E8"/>
+            </TabItem>
+            <TabItem Header="Настройки" Margin="-199,59,0,-78" HorizontalAlignment="Left" Width="197" Background="#FF927BDA" BorderBrush="{x:Null}">
+                <Grid Margin="0,-2,-4,-4" Background="#FFDBD7E8" HorizontalAlignment="Right" Width="598"/>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
