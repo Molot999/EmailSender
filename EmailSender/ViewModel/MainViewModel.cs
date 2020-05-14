@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using EmailSender.Command;
 
 namespace EmailSender.ViewModel
 {
@@ -11,6 +12,8 @@ namespace EmailSender.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+
+        private ICommand sendOneMessage = new SimpleCommand()
         public MainViewModel()
         { }
         public void OnPropertyChanged([CallerMemberName]string prop = "")
