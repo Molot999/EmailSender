@@ -24,5 +24,6 @@ namespace EmailSender
 
             DataContext = new MainViewModel();
         }
+
     }
 }

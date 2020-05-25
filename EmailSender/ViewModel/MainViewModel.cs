@@ -1,18 +1,20 @@
 ﻿using System;
 using System.IO;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using EmailSender.Command;
 using System.Net.Mail;
+using EmailSender.Model;
 
 namespace EmailSender.ViewModel
 {
     class MainViewModel : INotifyPropertyChanged
     {
-
-        public ObservableCollection<MailMessage> MailCollection { get; set; }
+        private List<string> recepietnsMails = new List<string>();
+        public List<string> RecepietnsMails { get { return recepietnsMails; } set {recepietnsMails = value; } }
 
         private string mailSender;
         private string mailRecipient;
@@ -33,7 +35,6 @@ namespace EmailSender.ViewModel
                 return sendEmail ??
                     (sendEmail = new SimpleCommand(obj =>
                     {
-                        MailMessage newMail = new MailMessage(mailSender, mailRecipient, mailSubject, mailBody);
                         
                     }));
             }
