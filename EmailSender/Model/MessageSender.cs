@@ -47,17 +47,16 @@ namespace EmailSender.Model
         {
             if (mailMessage != null)
             {
-                // smtpClient.SendAsync(mailMessage)l
 
             }
 
 
-            void SetCredentials(string login, string password)
-            {
+         void SetCredentials(string login, string password)
+        {
                 if (login != null && password != null)
                     smtpClient.Credentials = new NetworkCredential(login, password);
 
-            }
+        }
 
         }
     }

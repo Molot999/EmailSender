@@ -13,19 +13,8 @@ namespace EmailSender.ViewModel
 {
     class MainViewModel : INotifyPropertyChanged
     {
-        private List<string> recepietnsMails = new List<string>();
-        public List<string> RecepietnsMails { get { return recepietnsMails; } set {recepietnsMails = value; } }
-
-        private string mailSender;
-        private string mailRecipient;
-        private string mailSubject;
-        private string mailBody;
-
-        public string MailSender { get { return mailSender; } set { mailSender = value; } }
-        public string MailRecipient { get { return mailRecipient; } set { mailRecipient = value; } }
-        public string MailSubject { get { return mailSubject; } set { mailSubject = value; } }
-        public string MailBody { get { return mailBody; } set { mailBody = value; } }
-
+        public MessageAttachmentsViewModel MessageAttachmentsViewModel { get; set; }  = new MessageAttachmentsViewModel();
+        public MessageRecepientsViewModel RecepientsViewModel { get; set; }  = new MessageRecepientsViewModel();
 
         private SimpleCommand sendEmail;
         public SimpleCommand SendEmail

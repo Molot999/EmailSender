@@ -1,26 +1,54 @@
-﻿<Window x:Class="EmailSender.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmailSender"
+        xmlns:ViewModel="clr-namespace:EmailSender.ViewModel" x:Class="EmailSender.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="1000" ResizeMode="NoResize">
     <Grid>
         <TabControl HorizontalAlignment="Left" Height="424" VerticalAlignment="Top" Width="994" Margin="0,0,0,-3">
             <TabItem Header="Отправить" Margin="-2,20,0,-39" HorizontalAlignment="Left" Width="134" Background="#FF927BDA" BorderBrush="{x:Null}">
+                <TabItem.DataContext>
+                    <ViewModel:MainViewModel/>
+                </TabItem.DataContext>
                 <Grid Margin="130,-2,-3,0" Background="#FFDBD7E8" HorizontalAlignment="Left" Width="861">
                     <TabControl HorizontalAlignment="Left" Height="398" VerticalAlignment="Top" Width="861">
-                        <TabItem Header="Сообщение" Margin="208,0,-261,-2" Background="#FFBF92FF"Background="#FFBF92FF">
+                        <TabItem Header="Сообщение" Margin="208,0,-261,-2" Background="#FFBF92FF">
                             <Grid Background="#FFE5E5E5">
                                 <Button Content="Отправить" HorizontalAlignment="Left" Height="40" Margin="617,320,0,0" VerticalAlignment="Top" Width="228" FontSize="20" FontFamily="Sitka Heading" Background="#FFB7A3F9" FontWeight="Bold"/>
+                                <RichTextBox HorizontalAlignment="Left" Height="177" Margin="10,93,0,0" VerticalAlignment="Top" Width="826">
+                                    <FlowDocument/>
+                                </RichTextBox>
+                                <Label Content="Сообщение" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="98" FontFamily="Segoe UI Semibold" FontSize="16"/>
+                                <TextBox HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="197" FontSize="14"/>
+                                <Label Content="Тема" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="49" FontFamily="Segoe UI Semibold" FontSize="16"/>
+                                <TextBox HorizontalAlignment="Left" Height="23" Margin="229,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="197" FontSize="14"/>
+                                <Label Content="Email отправителя" HorizontalAlignment="Left" Margin="229,10,0,0" VerticalAlignment="Top" Width="149" FontFamily="Segoe UI Semibold" FontSize="16"/>
+                                <CheckBox Content="является html-кодом" HorizontalAlignment="Left" Margin="108,75,0,0" VerticalAlignment="Top" Width="137"/>
+                                <TextBox HorizontalAlignment="Left" Height="23" Margin="449,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198" FontSize="14"/>
+                                <Label Content="Имя отправителя" HorizontalAlignment="Left" Margin="449,10,0,0" VerticalAlignment="Top" Width="142" FontFamily="Segoe UI Semibold" FontSize="16"/>
                             </Grid>
                         </TabItem>
                         <TabItem Header="Получатели" Margin="395,0,-448,-2" Background="#FFBF92FF">
-                            <Grid Background="#FFE5E5E5"/>
+                            <Grid Background="#FFE5E5E5">
+                                <Border BorderThickness="1" HorizontalAlignment="Left" Height="160" Margin="636,39,0,0" VerticalAlignment="Top" Width="185" Background="#90D5CBF3">
+                                    <Button Content="Экспортировать" HorizontalAlignment="Left" VerticalAlignment="Top" Width="165" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9" Margin="9,9,0,0"/>
+                                </Border>
+                                <ListBox HorizontalAlignment="Left" Height="160" Margin="183,39,0,0" VerticalAlignment="Top" Width="448"/>
+                                <Button Content="Удалить" HorizontalAlignment="Left" Margin="183,204,0,0" VerticalAlignment="Top" Width="148" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9"/>
+                                <Button Content="Добавить" HorizontalAlignment="Left" Margin="336,204,0,0" VerticalAlignment="Top" Width="148" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9"/>
+                                <TextBox HorizontalAlignment="Left" Height="24" Margin="489,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="142"/>
+                                <Label Content="Экспорт осуществляется из &#xA;файла формата TXT.&#xA;&#xA;Email-адреса должны&#xA;распологаться по одному&#xA;на каждую строку. " HorizontalAlignment="Left" Margin="648,81,0,0" VerticalAlignment="Top" Height="107" Width="162"/>
+                            </Grid>
                         </TabItem>
-                        <TabItem Header="Вложения" Margin="186,0,-249,-2" Background="#FFBF92FF">
-                            <Grid Background="#FFE5E5E5"/>
+                        <TabItem DataContext="{Binding MessageAttachmentsViewModel}" Header="Вложения" Margin="186,0,-249,-2" Background="#FFBF92FF">
+                            <Grid Background="#FFE5E5E5">
+                                <ListBox HorizontalAlignment="Left" Height="160" Margin="183,39,0,0" VerticalAlignment="Top" Width="448" SelectedItem="{Binding SelectedAttachment, Mode=TwoWay}" ItemsSource="{Binding AttachmentCollection}"/>
+                                <Button Content="Удалить" HorizontalAlignment="Left" Margin="183,204,0,0" VerticalAlignment="Top" Width="214" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9" Command="{Binding DeleteAttachment}"/>
+                                <Button Content="Добавить" HorizontalAlignment="Left" Margin="417,204,0,0" VerticalAlignment="Top" Width="214" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9" Command="{Binding AddAttachment}"/>
+                            </Grid>
                         </TabItem>
                     </TabControl>
                 </Grid>

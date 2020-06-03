@@ -58,6 +58,8 @@
     <Compile Include="Command\AsyncCommand.cs" />
     <Compile Include="Model\MessageSender.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MessageAttachmentsViewModel.cs" />
+    <Compile Include="ViewModel\MessageRecepientsViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

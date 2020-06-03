@@ -21,8 +21,6 @@ namespace EmailSender
         public MainWindow()
         {
             InitializeComponent();
-
-            DataContext = new MainViewModel();
         }
 
     }
