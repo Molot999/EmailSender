@@ -9,9 +9,9 @@ namespace EmailSender.Model
 {
     class OptionsManager
     {
-        public void SaveOptions()
+        public void SaveOptions(Options options)
         {
-            string JSONOptions = JsonConvert.SerializeObject()
+            string JSONOptions = JsonConvert.SerializeObject(options)
         }
     }
 }

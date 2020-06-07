@@ -14,6 +14,13 @@ namespace EmailSender.Model
         public string password;
         public bool useSSL;
 
-        public Options()
+        public Options(string smtpHost, string smtpPort, string login, string password, bool useSSL)
+        {
+            this.smtpHost = smtpHost;
+            this.smtpPort = smtpPort;
+            this.login = login;
+            this.password = password;
+            this.useSSL = useSSL;
+        }
     }
 }
