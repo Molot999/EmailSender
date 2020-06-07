@@ -15,7 +15,7 @@
                 </TabItem.DataContext>
                 <Grid Margin="130,-2,-3,0" Background="#FFDBD7E8" HorizontalAlignment="Left" Width="861">
                     <TabControl HorizontalAlignment="Left" Height="398" VerticalAlignment="Top" Width="861">
-                        <TabItem Header="Сообщение" Margin="208,0,-261,-2" Background="#FFBF92FF">
+                        <TabItem Header="Сообщение" Margin="166,0,-219,-2" Background="#FFBF92FF">
                             <Grid Background="#FFE5E5E5">
                                 <Button Content="Отправить" HorizontalAlignment="Left" Height="40" Margin="617,320,0,0" VerticalAlignment="Top" Width="228" FontSize="20" FontFamily="Sitka Heading" Background="#FFB7A3F9" FontWeight="Bold"/>
                                 <RichTextBox HorizontalAlignment="Left" Height="177" Margin="10,93,0,0" VerticalAlignment="Top" Width="826">
@@ -31,23 +31,28 @@
                                 <Label Content="Имя отправителя" HorizontalAlignment="Left" Margin="449,10,0,0" VerticalAlignment="Top" Width="142" FontFamily="Segoe UI Semibold" FontSize="16"/>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Получатели" Margin="395,0,-448,-2" Background="#FFBF92FF">
+                        <TabItem DataContext="{Binding MessageRecepientsViewModel}" Header="Получатели" Margin="353,0,-406,-2" Background="#FFBF92FF">
                             <Grid Background="#FFE5E5E5">
                                 <Border BorderThickness="1" HorizontalAlignment="Left" Height="160" Margin="636,39,0,0" VerticalAlignment="Top" Width="185" Background="#90D5CBF3">
-                                    <Button Content="Экспортировать" HorizontalAlignment="Left" VerticalAlignment="Top" Width="165" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9" Margin="9,9,0,0"/>
+                                    <Button Content="Экспортировать" HorizontalAlignment="Left" VerticalAlignment="Top" Width="165" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9" Margin="9,9,0,0" Command="{Binding ExportRecepientMail}"/>
                                 </Border>
-                                <ListBox HorizontalAlignment="Left" Height="160" Margin="183,39,0,0" VerticalAlignment="Top" Width="448"/>
-                                <Button Content="Удалить" HorizontalAlignment="Left" Margin="183,204,0,0" VerticalAlignment="Top" Width="148" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9"/>
-                                <Button Content="Добавить" HorizontalAlignment="Left" Margin="336,204,0,0" VerticalAlignment="Top" Width="148" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9"/>
-                                <TextBox HorizontalAlignment="Left" Height="24" Margin="489,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="142"/>
+                                <ListBox HorizontalAlignment="Left" Height="160" Margin="183,39,0,0" VerticalAlignment="Top" Width="448" ItemsSource="{Binding RecepientsMails}" SelectedItem="{Binding SelectedRecepientMail, Mode=TwoWay}"/>
+                                <Button Content="Удалить" HorizontalAlignment="Left" Margin="183,204,0,0" VerticalAlignment="Top" Width="148" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9" Command="{Binding DeleteRecepientMail}"/>
+                                <Button Content="Добавить" HorizontalAlignment="Left" Margin="336,204,0,0" VerticalAlignment="Top" Width="148" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9" Command="{Binding AddRecepientMail}"/>
+                                <TextBox HorizontalAlignment="Left" Height="24" Margin="489,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="142" Text="{Binding Path=NewRecepientMailTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Content="Экспорт осуществляется из &#xA;файла формата TXT.&#xA;&#xA;Email-адреса должны&#xA;распологаться по одному&#xA;на каждую строку. " HorizontalAlignment="Left" Margin="648,81,0,0" VerticalAlignment="Top" Height="107" Width="162"/>
                             </Grid>
                         </TabItem>
-                        <TabItem DataContext="{Binding MessageAttachmentsViewModel}" Header="Вложения" Margin="186,0,-249,-2" Background="#FFBF92FF">
+                        <TabItem DataContext="{Binding MessageAttachmentsViewModel}" Header="Вложения" Margin="144,0,-207,-2" Background="#FFBF92FF">
                             <Grid Background="#FFE5E5E5">
                                 <ListBox HorizontalAlignment="Left" Height="160" Margin="183,39,0,0" VerticalAlignment="Top" Width="448" SelectedItem="{Binding SelectedAttachment, Mode=TwoWay}" ItemsSource="{Binding AttachmentCollection}"/>
                                 <Button Content="Удалить" HorizontalAlignment="Left" Margin="183,204,0,0" VerticalAlignment="Top" Width="214" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9" Command="{Binding DeleteAttachment}"/>
                                 <Button Content="Добавить" HorizontalAlignment="Left" Margin="417,204,0,0" VerticalAlignment="Top" Width="214" Height="24" Background="#FFB7A3F9" BorderBrush="#FF674AC9" Command="{Binding AddAttachment}"/>
+                            </Grid>
+                        </TabItem>
+                        <TabItem DataContext="" Header="Отправить" Margin="341,0,-394,-2" Background="#FFBF92FF">
+                            <Grid Background="#FFE5E5E5">
+                                <ListBox HorizontalAlignment="Left" Height="160" Margin="183,39,0,0" VerticalAlignment="Top" Width="448"/>
                             </Grid>
                         </TabItem>
                     </TabControl>
@@ -69,7 +74,7 @@
                     <Label Content="Дополнительно" HorizontalAlignment="Left" Margin="373,220,0,0" VerticalAlignment="Top" Width="133" FontFamily="Segoe UI Semibold" FontSize="16"/>
                     <TextBox HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Top" Width="193" FontSize="14" RenderTransformOrigin="0.5,0.5" Margin="486,153,0,0"/>
                     <CheckBox Content="Использовать SSL" HorizontalAlignment="Left" Margin="176,255,0,0" VerticalAlignment="Top" Width="120"/>
-                    <Button Content="Сохранить" HorizontalAlignment="Left" Margin="319,331,0,0" VerticalAlignment="Top" Width="211" Height="31" Background="#FFB7A3F9" BorderBrush="#FF674AC9"/>
+                    <Button Content="Сохранить" HorizontalAlignment="Left" Margin="319,331,0,0" VerticalAlignment="Top" Width="211" Height="31" Background="#FFB7A3F9" BorderBrush="#FF674AC9" Command="{Binding SaveOptions}"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -14,15 +14,17 @@ namespace EmailSender.ViewModel
     class MainViewModel : INotifyPropertyChanged
     {
         public MessageAttachmentsViewModel MessageAttachmentsViewModel { get; set; }  = new MessageAttachmentsViewModel();
-        public MessageRecepientsViewModel RecepientsViewModel { get; set; }  = new MessageRecepientsViewModel();
+        public MessageRecepientsViewModel MessageRecepientsViewModel { get; set; }  = new MessageRecepientsViewModel();
 
-        private SimpleCommand sendEmail;
-        public SimpleCommand SendEmail
+        public OptionsViewModel OptionsViewModel { get; set; } = new OptionsViewModel();
+
+        private SimpleCommand saveOptions;
+        public SimpleCommand SaveOptions
         {
             get
             {
-                return sendEmail ??
-                    (sendEmail = new SimpleCommand(obj =>
+                return saveOptions ??
+                    (saveOptions = new SimpleCommand(obj =>
                     {
                         
                     }));

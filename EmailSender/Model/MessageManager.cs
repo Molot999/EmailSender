@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Mail;
 using System.Net;
+using System.Windows.Forms;
 
 namespace EmailSender.Model
 {
-    public class EmailSender
+    public class MessageManager
     {
         SmtpClient smtpClient = new SmtpClient();
 
@@ -38,7 +39,7 @@ namespace EmailSender.Model
             }
         }
 
-        public EmailSender()
+        public MessageManager()
         {
             smtpClient.UseDefaultCredentials = false;
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;

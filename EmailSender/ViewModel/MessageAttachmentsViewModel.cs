@@ -9,6 +9,7 @@ using EmailSender.Command;
 using System.Net.Mail;
 using EmailSender.Model;
 using System.Windows.Media.Animation;
+using System.Windows.Forms;
 
 namespace EmailSender.ViewModel
 {
@@ -21,10 +22,15 @@ namespace EmailSender.ViewModel
             {
                 return attachmentCollection;
             }
+
+            set
+            {
+                attachmentCollection = value;
+            }
         }
 
-        private object selectedAttachment;
-        public object SelectedAttachment
+        private string selectedAttachment;
+        public string SelectedAttachment
         {
             get { return selectedAttachment; }
 
@@ -43,7 +49,14 @@ namespace EmailSender.ViewModel
                 return addAttachment ??
                     (addAttachment = new SimpleCommand(obj =>
                     {
-                        throw new Exception();
+                        OpenFileDialog OPF = new OpenFileDialog();
+                        OPF.Multiselect = true;
+
+                        if (OPF.ShowDialog() == DialogResult.OK)
+                        {
+                            foreach(string attachmentFileName in OPF.FileNames)
+                            AttachmentCollection.Add(attachmentFileName);
+                        }
                     }
                     ));
             }
@@ -57,6 +70,11 @@ namespace EmailSender.ViewModel
                 return deleteAttachment ??
                     (deleteAttachment = new SimpleCommand(obj =>
                     {
+
+                        AttachmentCollection.Remove(SelectedAttachment);
+
+                        if (AttachmentCollection.Count != 0)
+                            SelectedAttachment = AttachmentCollection[0];
 
                     }, (obj) => SelectedAttachment != null));
             }
