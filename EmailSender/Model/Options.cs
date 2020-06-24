@@ -8,19 +8,24 @@ namespace EmailSender.Model
 {
     class Options
     {
-        public string smtpHost;
-        public string smtpPort;
-        public string login;
-        public string password;
-        public bool useSSL;
+        public string SmtpHost;
+        public int SmtpPort;
+        public string Login;
+        public string Password;
+        public bool UseSSL;
+        public bool UseDefaultCredentials => Login.Length == 0 && Password.Length == 0;
 
-        public Options(string smtpHost, string smtpPort, string login, string password, bool useSSL)
+        public Options()
         {
-            this.smtpHost = smtpHost;
-            this.smtpPort = smtpPort;
-            this.login = login;
-            this.password = password;
-            this.useSSL = useSSL;
+
+        }
+        public Options(string smtpHost, int smtpPort, string login, string password, bool useSSL)
+        {
+            SmtpHost = smtpHost;
+            SmtpPort = smtpPort;
+            Login = login;
+            Password = password;
+            UseSSL = useSSL;
         }
     }
 }

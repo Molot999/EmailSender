@@ -13,23 +13,10 @@ namespace EmailSender.ViewModel
 {
     class MainViewModel : INotifyPropertyChanged
     {
+        public MessageContentViewModel MessageContentViewModel { get; set; } = new MessageContentViewModel();
         public MessageAttachmentsViewModel MessageAttachmentsViewModel { get; set; }  = new MessageAttachmentsViewModel();
         public MessageRecepientsViewModel MessageRecepientsViewModel { get; set; }  = new MessageRecepientsViewModel();
-
         public OptionsViewModel OptionsViewModel { get; set; } = new OptionsViewModel();
-
-        private SimpleCommand saveOptions;
-        public SimpleCommand SaveOptions
-        {
-            get
-            {
-                return saveOptions ??
-                    (saveOptions = new SimpleCommand(obj =>
-                    {
-                        
-                    }));
-            }
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

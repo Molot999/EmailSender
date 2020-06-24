@@ -60,11 +60,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\AsyncCommand.cs" />
-    <Compile Include="Model\MessageManager.cs" />
+    <Compile Include="Model\MessageSendManager.cs" />
     <Compile Include="Model\Options.cs" />
-    <Compile Include="Model\OptionsManager.cs" />
+    <Compile Include="Model\OptionsFileManager.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MessageAttachmentsViewModel.cs" />
+    <Compile Include="ViewModel\MessageContentViewModel.cs" />
     <Compile Include="ViewModel\MessageRecepientsViewModel.cs" />
     <Compile Include="ViewModel\OptionsViewModel.cs" />
     <Page Include="MainWindow.xaml">

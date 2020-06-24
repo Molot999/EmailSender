@@ -10,25 +10,44 @@ using System.Net.Mail;
 using EmailSender.Model;
 using System.Windows.Media.Animation;
 using System.Windows.Forms;
-using EmailSender.Model;
 
 namespace EmailSender.ViewModel
 {
     class OptionsViewModel : INotifyPropertyChanged
     {
-        private string smtpHost;
-        private string smtpPort;
-        private string login;
-        private string password;
-        private bool useSSL;
+        private Options options { get => MessageSendManager.OptionsOfMailSending; set => MessageSendManager.OptionsOfMailSending = value; }
+        public string SmtpHost { get => options.SmtpHost; set { options.SmtpHost = value; OnPropertyChanged("SmtpHost"); }}
+        public int SmtpPort { get => options.SmtpPort; set { options.SmtpPort = value; OnPropertyChanged("SmtpPort"); }}
+        public string Login { get => options.Login; set { options.Login = value; OnPropertyChanged("Login"); }}
+        public string Password { get => options.Password; set { options.Password = value; OnPropertyChanged("Password"); }}
+        public bool UseSSL { get => options.UseSSL; set { options.UseSSL = value; OnPropertyChanged("UseSSL"); }}
 
-        public string SmtpHost { get => smtpHost; set => smtpHost = value; }
-        public string SmtpPort { get => smtpPort; set => smtpPort = value; }
-        public string Login { get => login; set => login = value; }
-        public string Password { get => password; set => password = value; }
-        public bool UseSSL { get => useSSL; set => useSSL = value; }
+        private SimpleCommand saveOptions;
+        public SimpleCommand SaveOptions
+        {
+            get
+            {
+                return saveOptions ??
+                    (saveOptions = new SimpleCommand(obj =>
+                    {
+                        OptionsFileManager.SaveOptionsToFile(options);
+                    }));
+            }
+        }
 
+        private SimpleCommand uploadLastOptions;
+        public SimpleCommand UploadLastOptions
+        {
+            get
+            {
+                return uploadLastOptions ??
+                    (uploadLastOptions = new SimpleCommand(obj =>
+                    {
+                        options = OptionsFileManager.UploadOptionsFromFile();
 
+                    }));
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
