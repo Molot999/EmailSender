@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace EmailSender.Model
 {
@@ -13,7 +14,11 @@ namespace EmailSender.Model
         public string Login;
         public string Password;
         public bool UseSSL;
-        public bool UseDefaultCredentials => Login.Length == 0 && Password.Length == 0;
+
+        public bool GetUseDefaultCredentials()
+        {
+            return Login?.Length == 0 && Password?.Length == 0;
+        }
 
         public Options()
         {
@@ -27,5 +32,7 @@ namespace EmailSender.Model
             Password = password;
             UseSSL = useSSL;
         }
+
+
     }
 }

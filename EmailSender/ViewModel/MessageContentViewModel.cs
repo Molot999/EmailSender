@@ -16,68 +16,75 @@ namespace EmailSender.ViewModel
 {
     class MessageContentViewModel : INotifyPropertyChanged
     {
-        private MailMessage message = MessageSendManager.mailMessage;
-
-        string subjectOfMail;
-        string senderOfEmail;
-        string nameOfSender;
-        string bodyOfMail;
-        bool isBodyHtml;
-
         public string SubjectOfMail
         {
-            get { return subjectOfMail; }
+            get { return MessageSendManager.SendingMail.Subject; }
 
             set
             {
-                subjectOfMail = value;
+                MessageSendManager.SendingMail.Subject = value;
                 OnPropertyChanged("SubjectOfMail");
             }
         }
 
         public string SenderOfEmail
         {
-            get { return senderOfEmail; }
+            get { return MessageSendManager.SendingMail.Sender?.ToString(); }
 
             set
             {
-                senderOfEmail = value.ToLower().Replace(" ", "");
+                MessageSendManager.SendingMail.Sender = new MailAddress(value.ToLower().Replace(" ", ""));
                 OnPropertyChanged("SenderOfEmail");
             }
         }
 
         public string NameOfSender
         {
-            get { return nameOfSender; }
+            get { return MessageSendManager.SendingMail.From?.ToString(); }
 
             set
             {
-                nameOfSender = value;
+                MessageSendManager.SendingMail.From = new MailAddress(value);
                 OnPropertyChanged("NameOfSender");
             }
         }
 
         public string BodyOfMail
         {
-            get { return bodyOfMail; }
+            get { return MessageSendManager.SendingMail.Body; }
 
             set
             {
-                bodyOfMail = value;
+                MessageSendManager.SendingMail.Body = value;
                 OnPropertyChanged("BodyOfMail");
             }
         }
 
         public bool IsBodyHtml
         {
-            get { return isBodyHtml; }
+            get { return MessageSendManager.SendingMail.IsBodyHtml; }
 
             set
             {
-                isBodyHtml = value;
+                MessageSendManager.SendingMail.IsBodyHtml = value;
                 OnPropertyChanged("IsBodyHtml");
             }
         }
+
+        private SimpleCommand sendMail;
+        public SimpleCommand SendMail
+        {
+            get
+            {
+                return sendMail ??
+                    (sendMail = new SimpleCommand(obj =>
+                    {
+                        MessageSendManager.Send();
+                    }
+                    ));
+            }
+        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

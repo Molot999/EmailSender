@@ -15,17 +15,16 @@ namespace EmailSender.ViewModel
 {
     class MessageAttachmentsViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<string> attachmentCollection = new ObservableCollection<string>();
         public ObservableCollection<string> AttachmentCollection
         {
             get
             {
-                return attachmentCollection;
+                return MessageSendManager.AttachmentsOfMail;
             }
 
             set
             {
-                attachmentCollection = value;
+                MessageSendManager.AttachmentsOfMail = value;
             }
         }
 

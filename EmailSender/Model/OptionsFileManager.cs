@@ -13,7 +13,7 @@ namespace EmailSender.Model
         static private readonly string optionsFilePath = Directory.GetCurrentDirectory() + @"\options";
         static public void SaveOptionsToFile(Options options)
         {
-            File.WriteAllText(optionsFilePath,JsonConvert.SerializeObject(options));
+            File.WriteAllText(optionsFilePath, JsonConvert.SerializeObject(options));
         }
 
         static public Options UploadOptionsFromFile()
