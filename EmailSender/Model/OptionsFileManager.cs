@@ -10,15 +10,11 @@ namespace EmailSender.Model
 {
     static class OptionsFileManager
     {
-        static private readonly string optionsFilePath = Directory.GetCurrentDirectory() + @"\options";
-        static public void SaveOptionsToFile(Options options)
-        {
-            File.WriteAllText(optionsFilePath, JsonConvert.SerializeObject(options));
-        }
+        private static readonly string optionsFilePath = Directory.GetCurrentDirectory() + @"\options";
 
-        static public Options UploadOptionsFromFile()
-        {
-            return JsonConvert.DeserializeObject<Options>(File.ReadAllText(optionsFilePath));
-        }
+        public static bool OptionsFileExists => File.Exists(optionsFilePath);
+        public static void SaveOptionsToFile(Options options) => File.WriteAllText(optionsFilePath, JsonConvert.SerializeObject(options));
+
+        public static Options UploadOptionsFromFile() => JsonConvert.DeserializeObject<Options>(File.ReadAllText(optionsFilePath));
     }
 }

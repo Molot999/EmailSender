@@ -15,7 +15,7 @@ namespace EmailSender.ViewModel
     {
         public MessageContentViewModel MessageContentViewModel { get; set; } = new MessageContentViewModel();
         public MessageAttachmentsViewModel MessageAttachmentsViewModel { get; set; }  = new MessageAttachmentsViewModel();
-        public MessageRecepientsViewModel MessageRecepientsViewModel { get; set; }  = new MessageRecepientsViewModel();
+        public MessageRecipientsViewModel MessageRecepientsViewModel { get; set; }  = new MessageRecipientsViewModel();
         public OptionsViewModel OptionsViewModel { get; set; } = new OptionsViewModel();
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace EmailSender.ViewModel
 {
-    class MessageRecepientsViewModel : INotifyPropertyChanged
+    class MessageRecipientsViewModel : INotifyPropertyChanged
     {
         private string newRecepientMailTextBox;
         public string NewRecepientMailTextBox

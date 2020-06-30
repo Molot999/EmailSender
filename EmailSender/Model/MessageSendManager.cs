@@ -12,11 +12,12 @@ namespace EmailSender.Model
 {
     static class MessageSendManager
     {
+        
         public static Options OptionsOfMailSending = new Options();
 
         public static ObservableCollection<string> AttachmentsOfMail = new ObservableCollection<string>();
 
-        public static ObservableCollection<MailAddress> RecepientsOfMail = new ObservableCollection<MailAddress>();
+        public static ObservableCollection<MailAddress> RecipientsOfMail = new ObservableCollection<MailAddress>();
 
         public static MailMessage SendingMail = new MailMessage();
 
@@ -30,7 +31,7 @@ namespace EmailSender.Model
 
             smtpClient.Host = OptionsOfMailSending.SmtpHost;
             smtpClient.Port = OptionsOfMailSending.SmtpPort;
-            smtpClient.EnableSsl = OptionsOfMailSending.UseSSL;
+            smtpClient.EnableSsl = OptionsOfMailSending.GetUseDefaultCredentials();
             smtpClient.Credentials = new NetworkCredential(OptionsOfMailSending.Login, OptionsOfMailSending.Password);
 
         }
@@ -40,7 +41,7 @@ namespace EmailSender.Model
             foreach (string mailAttachment in AttachmentsOfMail)
                 SendingMail.Attachments.Add(new Attachment(mailAttachment));
 
-            foreach (MailAddress mailRecepient in RecepientsOfMail)
+            foreach (MailAddress mailRecepient in RecipientsOfMail)
                 SendingMail.To.Add(mailRecepient);
         }
 

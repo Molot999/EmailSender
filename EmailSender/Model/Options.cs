@@ -10,14 +10,14 @@ namespace EmailSender.Model
     class Options
     {
         public string SmtpHost;
-        public int SmtpPort;
-        public string Login;
-        public string Password;
+        public int SmtpPort = 234;
+        public string Login = "";
+        public string Password = "";
         public bool UseSSL;
 
         public bool GetUseDefaultCredentials()
         {
-            return Login?.Length == 0 && Password?.Length == 0;
+            return string.IsNullOrEmpty(Login) && string.IsNullOrEmpty(Password);
         }
 
         public Options()

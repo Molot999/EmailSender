@@ -15,7 +15,7 @@ namespace EmailSender.ViewModel
 {
     class OptionsViewModel : INotifyPropertyChanged
     {
-        private Options options { get => MessageSendManager.OptionsOfMailSending; set => MessageSendManager.OptionsOfMailSending = value; }
+        private Options options = new Options(); //{ get => MessageSendManager.OptionsOfMailSending; set => MessageSendManager.OptionsOfMailSending = value; }
 
         public string SmtpHost { get => options.SmtpHost; set { options.SmtpHost = value; OnPropertyChanged("SmtpHost"); }}
         public int SmtpPort { get => options.SmtpPort; set { options.SmtpPort = value; OnPropertyChanged("SmtpPort"); }}
@@ -31,8 +31,10 @@ namespace EmailSender.ViewModel
                 return saveOptions ??
                     (saveOptions = new SimpleCommand(obj =>
                     {
+
                         OptionsFileManager.SaveOptionsToFile(options);
-                    }));
+
+                    }, obj => !string.IsNullOrEmpty(SmtpHost) && SmtpPort != 0));
             }
         }
 
@@ -46,7 +48,7 @@ namespace EmailSender.ViewModel
                     {
                         options = OptionsFileManager.UploadOptionsFromFile();
 
-                    }));
+                    }, obj => OptionsFileManager.OptionsFileExists));
             }
         }
 
