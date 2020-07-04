@@ -15,16 +15,17 @@ namespace EmailSender.ViewModel
 {
     class MessageAttachmentsViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<string> AttachmentCollection
+
+        public ObservableCollection<string> MailAttachments
         {
             get
             {
-                return MessageSendManager.AttachmentsOfMail;
+                return MessageSendingManager.GetMailRecipients();
             }
 
             set
             {
-                MessageSendManager.AttachmentsOfMail = value;
+                MessageSendingManager.SetMailAttachments(value);
             }
         }
 
@@ -54,7 +55,7 @@ namespace EmailSender.ViewModel
                         if (OPF.ShowDialog() == DialogResult.OK)
                         {
                             foreach(string attachmentFileName in OPF.FileNames)
-                            AttachmentCollection.Add(attachmentFileName);
+                            MailAttachments.Add(attachmentFileName);
                         }
                     }
                     ));
@@ -70,10 +71,10 @@ namespace EmailSender.ViewModel
                     (deleteAttachment = new SimpleCommand(obj =>
                     {
 
-                        AttachmentCollection.Remove(SelectedAttachment);
+                        MailAttachments.Remove(SelectedAttachment);
 
-                        if (AttachmentCollection.Count != 0)
-                            SelectedAttachment = AttachmentCollection[0];
+                        if (MailAttachments.Count != 0)
+                            SelectedAttachment = MailAttachments[0];
 
                     }, (obj) => SelectedAttachment != null));
             }

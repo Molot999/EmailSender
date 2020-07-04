@@ -8,13 +8,13 @@ using Newtonsoft.Json;
 
 namespace EmailSender.Model
 {
-    static class OptionsFileManager
+    static class SmtpOptionsFileManager
     {
         private static readonly string optionsFilePath = Directory.GetCurrentDirectory() + @"\options";
 
         public static bool OptionsFileExists => File.Exists(optionsFilePath);
-        public static void SaveOptionsToFile(Options options) => File.WriteAllText(optionsFilePath, JsonConvert.SerializeObject(options));
+        public static void SaveOptionsToFile(SmtpOptions options) => File.WriteAllText(optionsFilePath, JsonConvert.SerializeObject(options));
 
-        public static Options UploadOptionsFromFile() => JsonConvert.DeserializeObject<Options>(File.ReadAllText(optionsFilePath));
+        public static SmtpOptions UploadOptionsFromFile() => JsonConvert.DeserializeObject<SmtpOptions>(File.ReadAllText(optionsFilePath));
     }
 }

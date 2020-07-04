@@ -63,7 +63,7 @@
                                     <ColumnDefinition Width="218*"/>
                                     <ColumnDefinition Width="637*"/>
                                 </Grid.ColumnDefinitions>
-                                <ListBox HorizontalAlignment="Left" Height="160" Margin="183,39,0,0" VerticalAlignment="Top" Width="448" SelectedItem="{Binding SelectedAttachment, Mode=TwoWay}" ItemsSource="{Binding AttachmentCollection}" Grid.ColumnSpan="2"/>
+                                <ListBox HorizontalAlignment="Left" Height="160" Margin="183,39,0,0" VerticalAlignment="Top" Width="448" SelectedItem="{Binding SelectedAttachment, Mode=TwoWay}" ItemsSource="{Binding MailAttachments}" Grid.ColumnSpan="2"/>
                                 <Button Content="Удалить" HorizontalAlignment="Left" Margin="183,204,0,0" VerticalAlignment="Top" Width="214" Height="24" Command="{Binding DeleteAttachment}" Grid.ColumnSpan="2"/>
                                 <Button Content="Добавить" HorizontalAlignment="Left" Margin="199,204,0,0" VerticalAlignment="Top" Width="214" Height="24" Command="{Binding AddAttachment}" Grid.Column="1"/>
                             </Grid>

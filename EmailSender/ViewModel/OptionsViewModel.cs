@@ -15,13 +15,14 @@ namespace EmailSender.ViewModel
 {
     class OptionsViewModel : INotifyPropertyChanged
     {
-        private Options options = new Options(); //{ get => MessageSendManager.OptionsOfMailSending; set => MessageSendManager.OptionsOfMailSending = value; }
+        private SmtpOptions optionsOfSending = new SmtpOptions();
+        public SmtpOptions OptionsOfSending { get { return optionsOfSending; } set { optionsOfSending = value; } }
 
-        public string SmtpHost { get => options.SmtpHost; set { options.SmtpHost = value; OnPropertyChanged("SmtpHost"); }}
-        public int SmtpPort { get => options.SmtpPort; set { options.SmtpPort = value; OnPropertyChanged("SmtpPort"); }}
-        public string Login { get => options.Login; set { options.Login = value; OnPropertyChanged("Login"); }}
-        public string Password { get => options.Password; set { options.Password = value; OnPropertyChanged("Password"); }}
-        public bool UseSSL { get => options.UseSSL; set { options.UseSSL = value; OnPropertyChanged("UseSSL"); }}
+        public string SmtpHost { get => OptionsOfSending.SmtpHost; set { OptionsOfSending.SmtpHost = value; OnPropertyChanged("SmtpHost"); }}
+        public int SmtpPort { get => OptionsOfSending.SmtpPort; set { OptionsOfSending.SmtpPort = value; OnPropertyChanged("SmtpPort"); }}
+        public string Login { get => OptionsOfSending.Login; set { OptionsOfSending.Login = value; OnPropertyChanged("Login"); }}
+        public string Password { get => OptionsOfSending.Password; set { OptionsOfSending.Password = value; OnPropertyChanged("Password"); }}
+        public bool UseSSL { get => OptionsOfSending.UseSSL; set { OptionsOfSending.UseSSL = value; OnPropertyChanged("UseSSL"); }}
 
         private SimpleCommand saveOptions;
         public SimpleCommand SaveOptions
@@ -31,8 +32,8 @@ namespace EmailSender.ViewModel
                 return saveOptions ??
                     (saveOptions = new SimpleCommand(obj =>
                     {
-
-                        OptionsFileManager.SaveOptionsToFile(options);
+                        SmtpOptionsFileManager.SaveOptionsToFile(OptionsOfSending);
+                        MessageSendingManager.SetSendingOptions(OptionsOfSending);
 
                     }, obj => !string.IsNullOrEmpty(SmtpHost) && SmtpPort != 0));
             }
@@ -46,9 +47,10 @@ namespace EmailSender.ViewModel
                 return uploadLastOptions ??
                     (uploadLastOptions = new SimpleCommand(obj =>
                     {
-                        options = OptionsFileManager.UploadOptionsFromFile();
+                        (SmtpHost, SmtpPort, Login, Password, UseSSL) = SmtpOptionsFileManager.UploadOptionsFromFile();
+                        MessageSendingManager.SetSendingOptions(OptionsOfSending);
 
-                    }, obj => OptionsFileManager.OptionsFileExists));
+                    }, obj => SmtpOptionsFileManager.OptionsFileExists));
             }
         }
 

@@ -18,6 +18,7 @@ namespace EmailSender.ViewModel
         public MessageRecipientsViewModel MessageRecepientsViewModel { get; set; }  = new MessageRecipientsViewModel();
         public OptionsViewModel OptionsViewModel { get; set; } = new OptionsViewModel();
 
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
