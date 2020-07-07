@@ -12,58 +12,52 @@ namespace EmailSender.Model
 {
     static class MessageSendingManager
     {
-        
-        private static SmtpOptions sendingOptions = new SmtpOptions();
 
-        private static ObservableCollection<string> mailAttachments = new ObservableCollection<string>();
+        private static bool sendingCompletedOrNotStarted = true;
+        public static bool SendingAllowed => sendingCompletedOrNotStarted == true || MailRecipients.Count > 0 || SendingOptions != null;
 
-        private static ObservableCollection<MailAddress> mailRecipients = new ObservableCollection<MailAddress>();
-
-        private static MailMessage sendingMail;
+        public static SmtpOptions SendingOptions { private get; set; }
 
         private static SmtpClient smtpClient = new SmtpClient();
 
-        public static void SetSendingOptions(SmtpOptions optionsOfSending) => sendingOptions = optionsOfSending;
+        public static ObservableCollection<string> MailAttachments { get; set; } = new ObservableCollection<string>();
 
-        public static void SetMailAttachments(ObservableCollection<string> mailAttachments) => MessageSendingManager.mailAttachments = mailAttachments;
+        public static ObservableCollection<MailAddress> MailRecipients { get; set; } = new ObservableCollection<MailAddress>();
 
-        public static ObservableCollection<string> GetMailRecipients() => mailAttachments;
+        public static MailMessage SendingMail { private get;  set; }
 
-        public static void SetMailMessage(MailMessage sendingMail) => MessageSendingManager.sendingMail = sendingMail;
-
-        private static void SetSendingOptions()
+        private static void ApplySendingOptions()
         {
-            bool useDefaultCredentials = sendingOptions.GetUseDefaultCredentials();
-
-            if (useDefaultCredentials == true)
-                smtpClient.UseDefaultCredentials = true;
-            else
-                smtpClient.UseDefaultCredentials = false;
-
+           
+            smtpClient.Credentials = new NetworkCredential(SendingOptions.Login, SendingOptions.Password);
+            
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-            smtpClient.Host = sendingOptions.SmtpHost;
-            smtpClient.Port = sendingOptions.SmtpPort;
-            smtpClient.EnableSsl = sendingOptions.UseSSL;
-            smtpClient.Credentials = new NetworkCredential(sendingOptions.Login, sendingOptions.Password);
-
+            smtpClient.Host = SendingOptions.SmtpHost;
+            smtpClient.Port = SendingOptions.SmtpPort;
+            smtpClient.EnableSsl = SendingOptions.UseSSL;
         }
 
         private static void FormMail()
         {
-            foreach (string mailAttachment in mailAttachments)
-                sendingMail.Attachments.Add(new Attachment(mailAttachment));
+            foreach (string mailAttachment in MailAttachments)
+                SendingMail.Attachments.Add(new Attachment(mailAttachment));
 
-            foreach (MailAddress mailRecepient in mailRecipients)
-                sendingMail.To.Add(mailRecepient);
+            foreach (MailAddress mailRecipient in MailRecipients)
+                SendingMail.To.Add(mailRecipient);
         }
 
-        public static void Send()
+        public async static void Send()
         {
-            SetSendingOptions();
+            smtpClient.SendCompleted += delegate { sendingCompletedOrNotStarted = true; };
+
+            ApplySendingOptions();
             FormMail();
 
-            smtpClient.Send(sendingMail);
+            sendingCompletedOrNotStarted = true;
+            await smtpClient.SendMailAsync(SendingMail);
+
         }
+
     }
 }

@@ -33,7 +33,7 @@ namespace EmailSender.ViewModel
                     (saveOptions = new SimpleCommand(obj =>
                     {
                         SmtpOptionsFileManager.SaveOptionsToFile(OptionsOfSending);
-                        MessageSendingManager.SetSendingOptions(OptionsOfSending);
+                        MessageSendingManager.SendingOptions = OptionsOfSending;
 
                     }, obj => !string.IsNullOrEmpty(SmtpHost) && SmtpPort != 0));
             }
@@ -48,7 +48,7 @@ namespace EmailSender.ViewModel
                     (uploadLastOptions = new SimpleCommand(obj =>
                     {
                         (SmtpHost, SmtpPort, Login, Password, UseSSL) = SmtpOptionsFileManager.UploadOptionsFromFile();
-                        MessageSendingManager.SetSendingOptions(OptionsOfSending);
+                        MessageSendingManager.SendingOptions = OptionsOfSending;
 
                     }, obj => SmtpOptionsFileManager.OptionsFileExists));
             }

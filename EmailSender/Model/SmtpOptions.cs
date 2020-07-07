@@ -17,7 +17,7 @@ namespace EmailSender.Model
 
         public bool GetUseDefaultCredentials()
         {
-            return !string.IsNullOrEmpty(Login) || !string.IsNullOrEmpty(Password);
+            return string.IsNullOrEmpty(Login) && string.IsNullOrEmpty(Password);
         }
 
         public SmtpOptions()

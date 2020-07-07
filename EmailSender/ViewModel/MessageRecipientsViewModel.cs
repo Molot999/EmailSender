@@ -15,54 +15,53 @@ namespace EmailSender.ViewModel
 {
     class MessageRecipientsViewModel : INotifyPropertyChanged
     {
-        private string newRecepientMailTextBox;
-        public string NewRecepientMailTextBox
+        private string newRecipientMailTextBox;
+        public string NewRecipientMailTextBox
         {
             get
             {
-                return newRecepientMailTextBox;
+                return newRecipientMailTextBox;
             }
 
             set
             {
-                newRecepientMailTextBox = value.ToLower().Replace(" ", "");
-                OnPropertyChanged("NewRecepientMailTextBox");
+                newRecipientMailTextBox = value.ToLower().Replace(" ", "");
+                OnPropertyChanged("NewRecipientMailTextBox");
             }
         }
 
-        private ObservableCollection<MailAddress> recepientsMails = new ObservableCollection<MailAddress>();
-        public ObservableCollection<MailAddress> RecepientsMails
+        public ObservableCollection<MailAddress> MailRecipients
         {
             get
             {
-                return recepientsMails;
+                return MessageSendingManager.MailRecipients;
             }
 
             set
             {
-                recepientsMails = value;
+                MessageSendingManager.MailRecipients = value;
             }
         }
 
-        private MailAddress selectedRecepientMail;
-        public MailAddress SelectedRecepientMail
+        private MailAddress selectedRecipientMail;
+        public MailAddress SelectedRecipientMail
         {
-            get { return selectedRecepientMail; }
+            get { return selectedRecipientMail; }
 
             set
             {
-                selectedRecepientMail = value;
-                OnPropertyChanged("SelectedRecepientMail");
+                selectedRecipientMail = value;
+                OnPropertyChanged("SelectedRecipientMail");
             }
         }
 
-        private SimpleCommand exportRecepientMail;
-        public SimpleCommand ExportRecepientMail
+        private SimpleCommand exportRecipientMail;
+        public SimpleCommand ExportRecipientMail
         {
             get
             {
-                return exportRecepientMail ??
-                    (exportRecepientMail = new SimpleCommand(obj =>
+                return exportRecipientMail ??
+                    (exportRecipientMail = new SimpleCommand(obj =>
                     {
                         OpenFileDialog OPF = new OpenFileDialog();
                         OPF.Filter = "Файлы txt|*.txt";
@@ -71,42 +70,43 @@ namespace EmailSender.ViewModel
                         {
                             StreamReader readFile = File.OpenText(OPF.FileName);
 
-                            string newRecepient;
+                            string newRecipient;
 
-                            while ((newRecepient = readFile.ReadLine()) != null)
+                            while ((newRecipient = readFile.ReadLine()) != null)
                             {
-                                MailAddress newRecepientMail;
+                                MailAddress newRecipientMail;
 
                                 try
                                 {
-                                    newRecepientMail = new MailAddress(newRecepient);
+                                    newRecipientMail = new MailAddress(newRecipient);
                                 }
                                 catch
                                 {
                                     continue;
                                 }
 
-                                RecepientsMails.Add(newRecepientMail);
+                                MailRecipients.Add(newRecipientMail);
                             }
+
                         }
                         
                     }));
             }
         }
 
-        private SimpleCommand addRecepientMail;
-        public SimpleCommand AddRecepientMail
+        private SimpleCommand addRecipientMail;
+        public SimpleCommand AddRecipientMail
         {
             get
             {
-                return addRecepientMail ??
-                    (addRecepientMail = new SimpleCommand(obj =>
+                return addRecipientMail ??
+                    (addRecipientMail = new SimpleCommand(obj =>
                     {
                         try
                         {
-                            MailAddress newReceptionMail = new MailAddress(NewRecepientMailTextBox);
-                            RecepientsMails.Add(newReceptionMail);
-                            NewRecepientMailTextBox = "";
+                            MailAddress newReceptionMail = new MailAddress(NewRecipientMailTextBox);
+                            MailRecipients.Add(newReceptionMail);
+                            NewRecipientMailTextBox = "";
                         }
                         catch
                         {
@@ -117,7 +117,7 @@ namespace EmailSender.ViewModel
                     {
                         try
                         {
-                            MailAddress newReceprionMail = new MailAddress(newRecepientMailTextBox);
+                            MailAddress newReciptionMail = new MailAddress(newRecipientMailTextBox);
                             return true;
                         }
                         catch
@@ -129,20 +129,20 @@ namespace EmailSender.ViewModel
             }
         }
 
-        private SimpleCommand deleteRecepientMail;
-        public SimpleCommand DeleteRecepientMail
+        private SimpleCommand deleteRecipientMail;
+        public SimpleCommand DeleteRecipientMail
         {
             get
             {
-                return deleteRecepientMail ??
-                    (deleteRecepientMail = new SimpleCommand(obj =>
+                return deleteRecipientMail ??
+                    (deleteRecipientMail = new SimpleCommand(obj =>
                     {
-                        RecepientsMails.Remove(SelectedRecepientMail);
+                        MailRecipients.Remove(SelectedRecipientMail);
 
-                        if (RecepientsMails.Count != 0)
-                            SelectedRecepientMail = RecepientsMails[0];
+                        if (MailRecipients.Count != 0)
+                            SelectedRecipientMail = MailRecipients[0];
 
-                    }, (obj) => SelectedRecepientMail != null));
+                    }, (obj) => SelectedRecipientMail != null));
             }
         }
 

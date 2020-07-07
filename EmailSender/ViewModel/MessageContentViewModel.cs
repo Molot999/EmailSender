@@ -28,7 +28,7 @@ namespace EmailSender.ViewModel
             }
         }
 
-        public string SenderOfEmail
+        public string EmailOfSender
         {
             get { return sendingMail.Sender?.ToString(); }
 
@@ -80,9 +80,9 @@ namespace EmailSender.ViewModel
                 return sendMail ??
                     (sendMail = new SimpleCommand(obj =>
                     {
-                        MessageSendingManager.SetMailMessage(sendingMail);
+                        MessageSendingManager.SendingMail = sendingMail;
                         MessageSendingManager.Send();
-                    }
+                    }, obj => MessageSendingManager.SendingAllowed
                     ));
             }
         }

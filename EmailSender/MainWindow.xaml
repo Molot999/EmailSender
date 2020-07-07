@@ -48,12 +48,12 @@
                         <TabItem DataContext="{Binding MessageRecepientsViewModel}" Header="Получатели" Margin="353,0,-406,-2" Background="#FFBF92FF">
                             <Grid Background="#FFE5E5E5">
                                 <Border BorderThickness="1" HorizontalAlignment="Left" Height="160" Margin="636,39,0,0" VerticalAlignment="Top" Width="185" Background="#90D5CBF3">
-                                    <Button Content="Экспортировать" HorizontalAlignment="Left" VerticalAlignment="Top" Width="165" Height="24" Margin="9,9,0,0" Command="{Binding ExportRecepientMail}"/>
+                                    <Button Content="Экспортировать" HorizontalAlignment="Left" VerticalAlignment="Top" Width="165" Height="24" Margin="9,9,0,0" Command="{Binding ExportRecipientMail}"/>
                                 </Border>
-                                <ListBox HorizontalAlignment="Left" Height="160" Margin="183,39,0,0" VerticalAlignment="Top" Width="448" ItemsSource="{Binding RecepientsMails}" SelectedItem="{Binding SelectedRecepientMail, Mode=TwoWay}"/>
-                                <Button Content="Удалить" HorizontalAlignment="Left" Margin="183,204,0,0" VerticalAlignment="Top" Width="148" Height="24" Command="{Binding DeleteRecepientMail}"/>
-                                <Button Content="Добавить" HorizontalAlignment="Left" Margin="336,204,0,0" VerticalAlignment="Top" Width="148" Height="24" Command="{Binding AddRecepientMail}"/>
-                                <TextBox HorizontalAlignment="Left" Height="24" Margin="489,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="142" Text="{Binding Path=NewRecepientMailTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <ListBox HorizontalAlignment="Left" Height="160" Margin="183,39,0,0" VerticalAlignment="Top" Width="448" ItemsSource="{Binding MailRecipients}" SelectedItem="{Binding SelectedRecipientMail, Mode=TwoWay}"/>
+                                <Button Content="Удалить" HorizontalAlignment="Left" Margin="183,204,0,0" VerticalAlignment="Top" Width="148" Height="24" Command="{Binding DeleteRecipientMail}"/>
+                                <Button Content="Добавить" HorizontalAlignment="Left" Margin="336,204,0,0" VerticalAlignment="Top" Width="148" Height="24" Command="{Binding AddRecipientMail}"/>
+                                <TextBox HorizontalAlignment="Left" Height="24" Margin="489,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="142" Text="{Binding Path=NewRecipientMailTextBox, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Content="Экспорт осуществляется из &#xA;файла формата TXT.&#xA;&#xA;Email-адреса должны&#xA;распологаться по одному&#xA;на каждую строку. " HorizontalAlignment="Left" Margin="648,81,0,0" VerticalAlignment="Top" Height="107" Width="162"/>
                             </Grid>
                         </TabItem>

@@ -20,12 +20,12 @@ namespace EmailSender.ViewModel
         {
             get
             {
-                return MessageSendingManager.GetMailRecipients();
+                return MessageSendingManager.MailAttachments;
             }
 
             set
             {
-                MessageSendingManager.SetMailAttachments(value);
+                MessageSendingManager.MailAttachments = value;
             }
         }
 
