@@ -17,6 +17,9 @@ namespace EmailSender.ViewModel
     class MessageContentViewModel : INotifyPropertyChanged
     {
         private MailMessage sendingMail = new MailMessage();
+
+        private bool SendingAllowed { get => MessageSendingManager.SendingAllowed; set =>
+
         public string SubjectOfMail
         {
             get { return sendingMail.Subject; }
@@ -30,22 +33,22 @@ namespace EmailSender.ViewModel
 
         public string EmailOfSender
         {
-            get { return sendingMail.Sender?.ToString(); }
+            get { return sendingMail.From?.ToString(); }
 
             set
             {
-                sendingMail.Sender = new MailAddress(value.ToLower().Replace(" ", ""));
-                OnPropertyChanged("SenderOfEmail");
+                sendingMail.From = new MailAddress(value.ToLower().Replace(" ", ""));
+                OnPropertyChanged("EmailrOfEmail");
             }
         }
 
         public string NameOfSender
         {
-            get { return sendingMail.From?.ToString(); }
+            get { return sendingMail.Sender?.ToString(); }
 
             set
             {
-                sendingMail.From = new MailAddress(value);
+                sendingMail.Sender = new MailAddress(value.ToLower().Replace(" ", ""));
                 OnPropertyChanged("NameOfSender");
             }
         }
@@ -82,11 +85,11 @@ namespace EmailSender.ViewModel
                     {
                         MessageSendingManager.SendingMail = sendingMail;
                         MessageSendingManager.Send();
-                    }, obj => MessageSendingManager.SendingAllowed
+                    }, obj => MessageSendingManager.SendingAllowed && EmailOfSender != null
+
                     ));
             }
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")

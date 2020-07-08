@@ -14,7 +14,7 @@ namespace EmailSender.Model
     {
 
         private static bool sendingCompletedOrNotStarted = true;
-        public static bool SendingAllowed => sendingCompletedOrNotStarted == true || MailRecipients.Count > 0 || SendingOptions != null;
+        public static bool SendingAllowed => sendingCompletedOrNotStarted == true && MailRecipients.Count > 0 && SendingOptions != null;
 
         public static SmtpOptions SendingOptions { private get; set; }
 
@@ -54,7 +54,7 @@ namespace EmailSender.Model
             ApplySendingOptions();
             FormMail();
 
-            sendingCompletedOrNotStarted = true;
+            sendingCompletedOrNotStarted = false;
             await smtpClient.SendMailAsync(SendingMail);
 
         }

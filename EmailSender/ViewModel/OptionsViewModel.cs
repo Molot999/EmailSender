@@ -15,8 +15,7 @@ namespace EmailSender.ViewModel
 {
     class OptionsViewModel : INotifyPropertyChanged
     {
-        private SmtpOptions optionsOfSending = new SmtpOptions();
-        public SmtpOptions OptionsOfSending { get { return optionsOfSending; } set { optionsOfSending = value; } }
+        public SmtpOptions OptionsOfSending { get; set; } = new SmtpOptions();
 
         public string SmtpHost { get => OptionsOfSending.SmtpHost; set { OptionsOfSending.SmtpHost = value; OnPropertyChanged("SmtpHost"); }}
         public int SmtpPort { get => OptionsOfSending.SmtpPort; set { OptionsOfSending.SmtpPort = value; OnPropertyChanged("SmtpPort"); }}
@@ -33,8 +32,9 @@ namespace EmailSender.ViewModel
                     (saveOptions = new SimpleCommand(obj =>
                     {
                         SmtpOptionsFileManager.SaveOptionsToFile(OptionsOfSending);
-                        MessageSendingManager.SendingOptions = OptionsOfSending;
 
+                        MessageSendingManager.SendingOptions = OptionsOfSending;
+                        
                     }, obj => !string.IsNullOrEmpty(SmtpHost) && SmtpPort != 0));
             }
         }

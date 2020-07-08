@@ -37,11 +37,11 @@
                                 <Label Content="Сообщение" HorizontalAlignment="Left" Margin="10,65,0,0" VerticalAlignment="Top" Width="98" FontFamily="Segoe UI Semibold" FontSize="16"/>
                                 <TextBox HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="197" FontSize="14" Text="{Binding Path=SubjectOfMail}"/>
                                 <Label Content="Тема" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="49" FontFamily="Segoe UI Semibold" FontSize="16"/>
-                                <TextBox HorizontalAlignment="Left" Height="23" Margin="229,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="197" FontSize="14" Text="{Binding Path=SenderOfEmail}"/>
-                                <Label Content="Email отправителя" HorizontalAlignment="Left" Margin="229,10,0,0" VerticalAlignment="Top" Width="149" FontFamily="Segoe UI Semibold" FontSize="16"/>
+                                <TextBox HorizontalAlignment="Left" Height="23" Margin="229,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="197" FontSize="14" Text="{Binding Path=NameOfSender}"/>
+                                <Label Content="Имя отправителя" HorizontalAlignment="Left" Margin="229,10,0,0" VerticalAlignment="Top" Width="149" FontFamily="Segoe UI Semibold" FontSize="16"/>
                                 <CheckBox Content="является html-кодом" HorizontalAlignment="Left" Margin="108,75,0,0" VerticalAlignment="Top" Width="137" IsChecked="{Binding Path=IsBodyHtml}"/>
-                                <TextBox HorizontalAlignment="Left" Height="23" Margin="449,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198" FontSize="14" Text="{Binding Path=NameOfSender}"/>
-                                <Label Content="Имя отправителя" HorizontalAlignment="Left" Margin="449,10,0,0" VerticalAlignment="Top" Width="142" FontFamily="Segoe UI Semibold" FontSize="16"/>
+                                <TextBox HorizontalAlignment="Left" Height="23" Margin="449,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198" FontSize="14" Text="{Binding Path=EmailOfSender}"/>
+                                <Label Content="Email отправителя" HorizontalAlignment="Left" Margin="449,10,0,0" VerticalAlignment="Top" Width="150" FontFamily="Segoe UI Semibold" FontSize="16"/>
                                 <Button Content="Отправить" HorizontalAlignment="Left" Margin="648,312,0,0" VerticalAlignment="Top" Width="197" Height="48" Command="{Binding SendMail}" FontSize="16"/>
                             </Grid>
                         </TabItem>
