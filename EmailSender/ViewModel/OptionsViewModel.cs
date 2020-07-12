@@ -1,15 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using EmailSender.Command;
-using System.Net.Mail;
 using EmailSender.Model;
-using System.Windows.Media.Animation;
-using System.Windows.Forms;
 
 namespace EmailSender.ViewModel
 {
