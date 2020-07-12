@@ -18,7 +18,8 @@ namespace EmailSender.ViewModel
     {
         private MailMessage sendingMail = new MailMessage();
 
-        private bool SendingAllowed { get => MessageSendingManager.SendingAllowed; set =>
+        private bool isMailSending;
+        private bool isSendingAllowed => isMailSending == false && MessageSendingManager.IsRecipientsSet && MessageSendingManager.IsSendingOptionsSet && EmailOfSender != null;
 
         public string SubjectOfMail
         {
@@ -83,11 +84,13 @@ namespace EmailSender.ViewModel
                 return sendMail ??
                     (sendMail = new SimpleCommand(obj =>
                     {
+
+                        isMailSending = true;
+                        MessageSendingManager.SmtpClient.SendCompleted += delegate { isMailSending = false; MessageBox.Show("Сообщение отправлено"); };
                         MessageSendingManager.SendingMail = sendingMail;
                         MessageSendingManager.Send();
-                    }, obj => MessageSendingManager.SendingAllowed && EmailOfSender != null
 
-                    ));
+                    }, obj => isSendingAllowed == true));
             }
         }
 

@@ -12,13 +12,13 @@ namespace EmailSender.Model
 {
     static class MessageSendingManager
     {
+        public static bool IsRecipientsSet => MailRecipients.Count != 0;
 
-        private static bool sendingCompletedOrNotStarted = true;
-        public static bool SendingAllowed => sendingCompletedOrNotStarted == true && MailRecipients.Count > 0 && SendingOptions != null;
+        public static bool IsSendingOptionsSet => SendingOptions != null;
 
         public static SmtpOptions SendingOptions { private get; set; }
 
-        private static SmtpClient smtpClient = new SmtpClient();
+        public static SmtpClient SmtpClient { get; } = new SmtpClient();
 
         public static ObservableCollection<string> MailAttachments { get; set; } = new ObservableCollection<string>();
 
@@ -29,13 +29,13 @@ namespace EmailSender.Model
         private static void ApplySendingOptions()
         {
            
-            smtpClient.Credentials = new NetworkCredential(SendingOptions.Login, SendingOptions.Password);
+            SmtpClient.Credentials = new NetworkCredential(SendingOptions.Login, SendingOptions.Password);
             
-            smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+            SmtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
 
-            smtpClient.Host = SendingOptions.SmtpHost;
-            smtpClient.Port = SendingOptions.SmtpPort;
-            smtpClient.EnableSsl = SendingOptions.UseSSL;
+            SmtpClient.Host = SendingOptions.SmtpHost;
+            SmtpClient.Port = SendingOptions.SmtpPort;
+            SmtpClient.EnableSsl = SendingOptions.UseSSL;
         }
 
         private static void FormMail()
@@ -49,14 +49,10 @@ namespace EmailSender.Model
 
         public async static void Send()
         {
-            smtpClient.SendCompleted += delegate { sendingCompletedOrNotStarted = true; };
-
             ApplySendingOptions();
             FormMail();
 
-            sendingCompletedOrNotStarted = false;
-            await smtpClient.SendMailAsync(SendingMail);
-
+            await SmtpClient.SendMailAsync(SendingMail);
         }
 
     }
